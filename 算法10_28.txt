@@ -1,0 +1,32 @@
+//计算二叉树的宽度算法
+#include <iostream>
+#include <queue>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left, *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+int getMaxWidth(TreeNode* root) {
+    if (!root) return 0;
+
+    queue<TreeNode*> q;
+    q.push(root);
+    int maxWidth = 0;
+
+    while (!q.empty()) {
+        int count = q.size();
+        maxWidth = max(maxWidth, count);
+
+        while (count--) {
+            TreeNode* temp = q.front();
+            q.pop();
+            if (temp->left) q.push(temp->left);
+            if (temp->right) q.push(temp->right);
+        }
+    }
+
+    return maxWidth;
+}
